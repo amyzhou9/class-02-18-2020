@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-library(readxl)
+library(readxl) %>% 
 library(tidyverse)
 library(janitor)
 library(reprex)
@@ -20,10 +20,15 @@ x <- read_excel( path = "class_enrollment_summary_by_term2.18.20.xlsx",
   group_by(course_department) %>% 
   summarize(enrollment = sum(u_grad, grad, non_degree)) %>% 
   arrange(desc(enrollment)) %>% 
-  head(5) 
-  
-
-
-x
+  head(5)  
 
 ```
+```{r}
+y <-read_excel( path = "class_enrollment_summary_by_term2.18.20.xlsx", 
+                 skip = 3) %>% 
+  clean_names("snake") %>% 
+  filter(!is.na(course_name)) 
+
+glimpse(y)
+```
+
